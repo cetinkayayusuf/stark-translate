@@ -1,3 +1,5 @@
 export * from './language.type'
 export * from './translation-text-input.type'
 export * from './translation-text-output.type'
+export * from './translation-file-input.type'
+export * from './translation-file-output.type'

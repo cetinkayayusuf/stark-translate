@@ -7,7 +7,6 @@ export const translateText = async (textInput: TranslationTextInputType): Promis
     try {
         if (textInput.source === undefined || textInput.source === null || textInput.source === '')
             textInput.source = await detectLanguage(textInput.text);
-        console.dir(textInput);
         return await axios.get(BASE_URL + `?key=${API_KEY}`, {
             params: {
                 q: textInput.text,
@@ -15,14 +14,12 @@ export const translateText = async (textInput: TranslationTextInputType): Promis
                 target: textInput.target,
             }
         }).then(result => result.data.data.translations.map((translation: any) => {
-            console.dir(result)
             return ({
                 translatedText: translation.translatedText,
                 sourceLanguageCode: translation.detectedSourceLanguage,
             } as TranslationTextOutputType)
 
         })).then(data => {
-            console.dir(data);
             return data;
         });
     } catch (e) {
