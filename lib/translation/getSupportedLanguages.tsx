@@ -1,5 +1,5 @@
 import axios, {AxiosError} from "axios";
-import {Language} from "./types/language.type";
+import {Language} from "./types";
 import {API_KEY, BASE_URL} from "./config";
 
 export const getSupportedLanguages = async (): Promise<Language[]> => {
