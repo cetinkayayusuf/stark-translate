@@ -1,6 +1,6 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
 import {Select, useToast} from "@chakra-ui/react";
-import { Language } from '../../lib/translation/types/language.type';
+import { Language } from '../../lib/translation/types';
 import {getSupportedLanguages} from "../../lib/translation/getSupportedLanguages";
 
 type LanguageSelectionProps = {
