@@ -1,6 +1,6 @@
 import React, {FunctionComponent, useState} from "react";
 import {LanguageSelection} from "../../common/LanguageSelection";
-import {Button, HStack, Input, VStack} from "@chakra-ui/react";
+import {Button, HStack, Input, useToast, VStack} from "@chakra-ui/react";
 import {TranslationTextInputType, TranslationTextOutputType} from "../../../lib/translation/types";
 import {translateText} from "../../../lib/translation";
 
@@ -12,8 +12,28 @@ export const TextTranslation: FunctionComponent<TextTranslationProps> = ({}) => 
         target: "",
     });
     const [translations, setTranslations] = useState<TranslationTextOutputType[]>([])
-    const handleTranslate = (): void => {
-        translateText(translationInput).then(translationsData => setTranslations(translationsData))
+    const toast = useToast();
+    const handleTranslate = async (): Promise<void> => {
+        if (translationInput.target === '') {
+            toast({
+                title: 'No Target Language Selected',
+                status: 'error',
+                duration: 2000,
+                isClosable: true,
+            });
+            return;
+        }
+        try {
+            await translateText(translationInput).then(translationsData => setTranslations(translationsData));
+        } catch (e) {
+            toast({
+                title: 'Translation Failed',
+                description: (e as Error).message,
+                status: 'error',
+                duration: 2000,
+                isClosable: true,
+            });
+        }
     }
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setTranslationInput(({
